@@ -9,8 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Reflection;
-
-
+using System.Runtime.ExceptionServices;
 
 namespace ScrobblerForKbMediaPlayer
 {
@@ -136,73 +135,104 @@ namespace ScrobblerForKbMediaPlayer
             AuthenticateKey(null);
         }
 
-
         /// <summary>
         /// UpdateNowPlaying
         /// </summary>
-        /// <param name="data"></param>
-        public void UpdateNowPlaying(PropertyData data)
+        public void UpdateNowPlaying(PropertyData data, bool isAuthRetry = false)
         {
-            if (!this.session.Authenticated)
-                return;
+            try
+            {
+                if (!this.session.Authenticated)
+                    return;
 
-            TimeSpan span = data.Duration.HasValue ? data.Duration.Value : new TimeSpan();
-            var entry = new NowplayingTrack(data.Artist, data.Title, span);
-            entry.Album = data.Album;
-            connection.ReportNowplaying(entry);
+                var entry = new NowplayingTrack(data.Artist, data.Title, data.GetDurationSpan());
+                entry.Album = data.Album;
+                connection.ReportNowplaying(entry);
+            }
+            catch (AuthenticationFailureException)
+            {
+                if (isAuthRetry)
+                    return;
+                Authenticate();
+                UpdateNowPlaying(data, true);
+            }
         }
 
         /// <summary>
         /// Scrobble
         /// </summary>
-        /// <returns></returns>
-        public bool Scrobble(ICollection<PropertyData> dataList)
+        public bool Scrobble(ICollection<PropertyData> dataList, bool isAuthRetry = false)
         {
-            if (!this.session.Authenticated || this.connection == null)
-                return false;
-            if (dataList == null || dataList.Count == 0)
-                return false;
-
-            foreach (PropertyData data in dataList)
+            try
             {
-                TimeSpan span = data.Duration.HasValue ? data.Duration.Value : new TimeSpan();
-                var entry = new Entry(data.Artist, data.Title, data.PlayedTime, PlaybackSource.User, span, ScrobbleMode.Played);
-                entry.Album = data.Album;
-                this.connection.Scrobble(entry);
+                if (!this.session.Authenticated || this.connection == null)
+                    return false;
+                if (dataList == null || dataList.Count == 0)
+                    return false;
+
+                foreach (PropertyData data in dataList)
+                {
+                    var entry = new Entry(data.Artist, data.Title, data.PlayedTime, PlaybackSource.User, data.GetDurationSpan(), ScrobbleMode.Played);
+                    entry.Album = data.Album;
+                    this.connection.Scrobble(entry);
+                }
+                return true;
             }
-            return true;
+            catch (AuthenticationFailureException)
+            {
+                if (isAuthRetry)
+                    return false;
+                Authenticate();
+                return Scrobble(dataList, true);
+            }
         }
 
         /// <summary>
         /// Love.
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public bool Love(PropertyData data)
+        public bool Love(PropertyData data, bool isAuthRetry = false)
         {
-            if (!this.session.Authenticated)
-                return false;
+            try
+            {
+                if (!this.session.Authenticated)
+                    return false;
 
-            var track = new Track(data.Artist, data.Title, this.session);
-            track.Love();
-            return true;
+                var track = new Track(data.Artist, data.Title, this.session);
+                track.Love();
+                return true;
+            }
+            catch (AuthenticationFailureException)
+            {
+                if (isAuthRetry)
+                    return false;
+                Authenticate();
+                return Love(data, true);
+            }
         }
 
         /// <summary>
         /// Unlove.
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public bool UnLove(PropertyData data)
+        public bool UnLove(PropertyData data, bool isAuthRetry = false)
         {
-            if (!this.session.Authenticated)
-                return false;
+            try
+            {
+                if (!this.session.Authenticated)
+                    return false;
 
-            // メソッドが無いので、リフレクションで track.unlove を実行
-            var track = new Track(data.Artist, data.Title, this.session);
-            track.GetType().InvokeMember("requireAuthentication", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod, null, track, null);
-            track.GetType().InvokeMember("request", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod, null, track, new string[] { "track.unlove" });
-            return true;
+                // メソッドが無いので、リフレクションで track.unlove を実行
+                var track = new Track(data.Artist, data.Title, this.session);
+                track.GetType().InvokeMember("requireAuthentication", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod, null, track, null);
+                track.GetType().InvokeMember("request", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod, null, track, new string[] { "track.unlove" });
+                return true;
+            }
+            catch (AuthenticationFailureException)
+            {
+                if (isAuthRetry)
+                    return false;
+                Authenticate();
+                return UnLove(data, true);
+            }
         }
 
         /// <summary>

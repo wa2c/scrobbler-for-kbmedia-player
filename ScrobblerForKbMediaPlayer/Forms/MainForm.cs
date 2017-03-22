@@ -1,4 +1,5 @@
-﻿using NDde;
+﻿using Lastfm.Scrobbling;
+using NDde;
 using ScrobblerForKbMediaPlayer.Entities;
 using ScrobblerForKbMediaPlayer.Enums;
 using ScrobblerForKbMediaPlayer.Utils;
@@ -126,11 +127,6 @@ namespace ScrobblerForKbMediaPlayer
 
             if (authenticated)
             {
-                this.notifyLastfmUserPageToolStripMenuItem.Enabled = true;
-                this.notifyScrobbleToolStripMenuItem.Enabled = true;
-                this.notifyLoveToolStripMenuItem.Enabled = true;
-                this.notifyUnloveToolStripMenuItem.Enabled = true;
-
                 this.authStateLabel.Text = Properties.Resources.MessageAuthenticated;
                 this.usernameTextBox.Text = this.lastFmManager.UserName;
                 this.useIconPictureBox.Image = this.lastFmManager.UserImage;
@@ -138,18 +134,12 @@ namespace ScrobblerForKbMediaPlayer
             }
             else
             {
-                this.notifyLastfmUserPageToolStripMenuItem.Enabled = false;
-                this.notifyScrobbleToolStripMenuItem.Enabled = false;
-                this.notifyLoveToolStripMenuItem.Enabled = false;
-                this.notifyUnloveToolStripMenuItem.Enabled = false;
-
                 if (string.IsNullOrEmpty(this.lastFmManager.SessionKey))
                     this.authStateLabel.Text = Properties.Resources.MessageAuthenticatedNot;
                 else
                     this.authStateLabel.Text = Properties.Resources.MessageAuthenticatedFailed;
                 this.usernameTextBox.Text = "";
                 this.useIconPictureBox.Image = null;
-                Program.Settings.LastFmSessionId = "";
             }
         }
 
@@ -247,11 +237,7 @@ namespace ScrobblerForKbMediaPlayer
                     try { lastFmManager.UpdateNowPlaying(receivedData); } catch (Exception) { }
 
                 // start scrobble timer
-                double timer = 0;
-                if (receivedData.Duration.HasValue)
-                {
-                    timer = (receivedData.Duration.Value.TotalMilliseconds * Program.Settings.ScrobbleTimeRate) / 100;
-                }
+                double timer = (receivedData.Milliseconds * Program.Settings.ScrobbleTimeRate) / 100;
                 if (Program.Settings.UseScrobbleTimeSeconds)
                 {
                     if (Program.Settings.ScrobbleTimeSeconds * 1000 < timer)

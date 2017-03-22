@@ -17,7 +17,7 @@ namespace ScrobblerForKbMediaPlayer.Entities
         /// <summary>アルバムアーティスト</summary>
         public string AlbumArtist { get; set; }
         /// <summary>長さ</summary>
-        public TimeSpan? Duration { get; set; }
+        public long Milliseconds { get; set; }
 
         /// <summary>再生状態</summary>
         public KbMediaPlayState State { get; set; }
@@ -55,11 +55,9 @@ namespace ScrobblerForKbMediaPlayer.Entities
             this.Album = album;
             this.AlbumArtist = albumArtist;
 
-            long d;
-            if (long.TryParse(duration, out d))
-                this.Duration = new TimeSpan(d * 10000);
-            else
-                this.Duration = null;
+            long d = 0;
+            long.TryParse(duration, out d);
+            this.Milliseconds = d;
 
             try
             {
@@ -71,6 +69,11 @@ namespace ScrobblerForKbMediaPlayer.Entities
             }
 
             this.PlayedTime = DateTime.Now;
+        }
+
+        public TimeSpan GetDurationSpan()
+        {
+            return new TimeSpan(Milliseconds * 10000);
         }
 
         public bool EqualsMedia(PropertyData data)
