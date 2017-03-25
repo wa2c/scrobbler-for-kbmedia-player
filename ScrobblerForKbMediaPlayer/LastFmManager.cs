@@ -109,6 +109,7 @@ namespace ScrobblerForKbMediaPlayer
                     this.UserImage = Image.FromStream(stream);
                 }
                 this.connection = new Connection(Utils.AppUtil.GetAppName(), Utils.AppUtil.GetVersion(), this.UserName, this.session);
+                this.connection.Initialize();
                 isSucceeded = true;
             }
             catch
@@ -178,10 +179,12 @@ namespace ScrobblerForKbMediaPlayer
                 }
                 return true;
             }
-            catch (AuthenticationFailureException)
+            catch (AuthenticationFailureException ex)
             {
                 if (isAuthRetry)
-                    return false;
+                {
+                    throw ex;
+                }
                 Authenticate();
                 return Scrobble(dataList, true);
             }
@@ -201,10 +204,12 @@ namespace ScrobblerForKbMediaPlayer
                 track.Love();
                 return true;
             }
-            catch (AuthenticationFailureException)
+            catch (AuthenticationFailureException ex)
             {
                 if (isAuthRetry)
-                    return false;
+                {
+                    throw ex;
+                }
                 Authenticate();
                 return Love(data, true);
             }
@@ -226,10 +231,12 @@ namespace ScrobblerForKbMediaPlayer
                 track.GetType().InvokeMember("request", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod, null, track, new string[] { "track.unlove" });
                 return true;
             }
-            catch (AuthenticationFailureException)
+            catch (AuthenticationFailureException ex)
             {
                 if (isAuthRetry)
-                    return false;
+                {
+                    throw ex;
+                }
                 Authenticate();
                 return UnLove(data, true);
             }

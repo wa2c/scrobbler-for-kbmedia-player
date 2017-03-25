@@ -234,7 +234,14 @@ namespace ScrobblerForKbMediaPlayer
             if (receivedData != null && receivedData.State == KbMediaPlayState.Playing)
             {
                 if (Program.Settings.UseUpdateNowPlaying)
-                    try { lastFmManager.UpdateNowPlaying(receivedData); } catch (Exception) { }
+                    try
+                    {
+                        lastFmManager.UpdateNowPlaying(receivedData);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                    }
 
                 // start scrobble timer
                 double timer = (receivedData.Milliseconds * Program.Settings.ScrobbleTimeRate) / 100;
@@ -506,7 +513,6 @@ namespace ScrobblerForKbMediaPlayer
                     Properties.Resources.ErrorNetwork,
                     ToolTipIcon.Warning
                     );
-                //MessageBox.Show(ex + "\n\n" + ex.Message + "\n\n" + ex.StackTrace);
             }
             catch (Exception ex) when (ex is Lastfm.Scrobbling.ScrobblingException || ex is Exception)
             {
@@ -516,7 +522,6 @@ namespace ScrobblerForKbMediaPlayer
                     Properties.Resources.ErrorApp,
                     ToolTipIcon.Warning
                     );
-                //MessageBox.Show(ex + "\n\n" + ex.Message + "\n\n" + ex.StackTrace);
                 // 送信に失敗した場合は現在の状態を保存
                 Program.Settings.WriteXml();
             }
