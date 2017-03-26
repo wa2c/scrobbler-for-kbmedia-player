@@ -25,7 +25,7 @@ Last.fm では、再生情報を自分のアカウントに通知することを
 * .NET Framework 4.5
 
 
-## プログラム構成
+## 構成ファイル
 
 * ScrobblerForKbMediaPlayer.exe        (プログラム本体)
 * ScrobblerForKbMediaPlayer.exe.config (プログラム設定ファイル)
@@ -33,6 +33,12 @@ Last.fm では、再生情報を自分のアカウントに通知することを
 * NDde.dll                             ( .NET Library for Dynamic Data Exchange )
 * Hqub.Lastfm.dll                      ( Last.fm API FULL )
 * Mono.HttpUtility.dll                 ( Mono.HttpUtility )
+
+
+## インストール方法
+
+1. 構成ファイルをフォルダに展開します。
+2. ScrobblerForKbMediaPlayer.exe.xml は、初回起動時に自動的に生成されます。
 
 
 ## 使い方
@@ -68,8 +74,8 @@ Last.fm では、再生情報を自分のアカウントに通知することを
 4. 動作仕様
     * KbMedia Player でメディアを再生を開始すると、Last.fm に NowPlaying を通知します。
     * KbMedia Player で一定時間メディアを再生し続けると、Last.fm に Scrobble します。
-    * Scrobble に失敗した場合、設定ファイルに保存され、次回 Scrobble 時に同時に送信されます。
-    * Scrobble にはタイトル、アーティストの両方が必要です。
+    * Scrobble に失敗した場合、再生情報が設定ファイルに保存され、次回 Scrobble 時に自動的に同時に送信されます。
+    * Scrobble 等の操作には、タイトル、アーティストの両方が必要です。
 
 
 ## 設定
@@ -103,3 +109,6 @@ Last.fm では、再生情報を自分のアカウントに通知することを
 
 2017-03-20: Ver.1.0 リリース
 
+2017-03-26: Ver.1.1 リリース
+* 起動後にScrobbleされない問題を修正しました。
+* 接続がエラーとなった際の処理を修正しました。
