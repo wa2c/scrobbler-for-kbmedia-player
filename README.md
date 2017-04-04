@@ -94,21 +94,34 @@ Last.fm では、再生情報を自分のアカウントに通知することを
 
 ## ライセンス
 
-[MIT]
+本ソフトウェアのソースコードは、MITライセンスで公開されています。
 * https://github.com/wa2c/scrobbler-for-kbmedia-player/blob/master/LICENCE.md
+
+また、本ソフトウェアは以下のライブラリを含みます。
+
+* Last.fm API FULL
+  Copyright (c) 2015 Glebov Boris
+  ( https://github.com/avatar29A/Last.fm )
+
+* NDde
+  Copyright (c) 2005-2006 Brain Gideon
+  ( http://ndde.codeplex.com/ )
 
 
 ## 作者
 
-[wa2c]
+本ソフトウェアは、wa2cによって開発、公開されています。
 * https://bitbucket.org/wa2c/
 * https://github.com/wa2c
 
 
 ## 履歴
 
-2017-03-20: Ver.1.0 リリース
+2017-03-20: Ver.1.0
 
-2017-03-26: Ver.1.1 リリース
+2017-03-26: Ver.1.1
 * 起動後にScrobbleされない問題を修正しました。
 * 接続がエラーとなった際の処理を修正しました。
+
+2017-04-05: Ver.1.2
+* スタートアップ追加ボタン、スタートアップ削除ボタンを追加しました。

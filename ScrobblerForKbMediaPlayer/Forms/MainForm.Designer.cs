@@ -52,6 +52,7 @@
             this.scrobbleTimeRateLabel = new System.Windows.Forms.Label();
             this.scrobbleTimeLabel = new System.Windows.Forms.Label();
             this.useScrobbleTimeSecondsCheckBox = new System.Windows.Forms.CheckBox();
+            this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.scrobbleTimeRateTrackBar = new System.Windows.Forms.TrackBar();
             this.scrobbleTimeSecondsNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.scrobbleTimeSecondsLabel = new System.Windows.Forms.Label();
@@ -62,22 +63,23 @@
             this.closeButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.deleteStartupButton = new System.Windows.Forms.Button();
+            this.createStartupButton = new System.Windows.Forms.Button();
             this.authGroupBox = new System.Windows.Forms.GroupBox();
             this.logoutButton = new System.Windows.Forms.Button();
             this.useIconPictureBox = new System.Windows.Forms.PictureBox();
             this.authStateLabel = new System.Windows.Forms.Label();
             this.authenticateButton = new System.Windows.Forms.Button();
             this.scrobbleTimer = new System.Windows.Forms.Timer(this.components);
-            this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.contextMenuStrip.SuspendLayout();
             this.useScrobbleGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scrobbleTimeRateTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scrobbleTimeSecondsNumericUpDown)).BeginInit();
             this.mainPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.authGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.useIconPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // notifyIcon
@@ -263,6 +265,10 @@
             this.useScrobbleTimeSecondsCheckBox.UseVisualStyleBackColor = true;
             this.useScrobbleTimeSecondsCheckBox.CheckedChanged += new System.EventHandler(this.useScrobbleTimeSecondsCheckBox_CheckedChanged);
             // 
+            // bindingSource
+            // 
+            this.bindingSource.DataSource = typeof(ScrobblerForKbMediaPlayer.Settings);
+            // 
             // scrobbleTimeRateTrackBar
             // 
             this.scrobbleTimeRateTrackBar.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "ScrobbleTimeRate", true));
@@ -345,7 +351,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainPanel.Controls.Add(this.closeButton);
             this.mainPanel.Controls.Add(this.exitButton);
-            this.mainPanel.Location = new System.Drawing.Point(20, 390);
+            this.mainPanel.Location = new System.Drawing.Point(20, 449);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(383, 42);
             this.mainPanel.TabIndex = 0;
@@ -379,6 +385,8 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.deleteStartupButton);
+            this.panel1.Controls.Add(this.createStartupButton);
             this.panel1.Controls.Add(this.authGroupBox);
             this.panel1.Controls.Add(this.useUpdateNowPlayingCheckBox);
             this.panel1.Controls.Add(this.useScrobbleCheckBox);
@@ -386,8 +394,31 @@
             this.panel1.Location = new System.Drawing.Point(20, 18);
             this.panel1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(380, 364);
+            this.panel1.Size = new System.Drawing.Size(380, 423);
             this.panel1.TabIndex = 1;
+            // 
+            // deleteStartupButton
+            // 
+            this.deleteStartupButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.deleteStartupButton.AutoSize = true;
+            this.deleteStartupButton.Location = new System.Drawing.Point(234, 378);
+            this.deleteStartupButton.Name = "deleteStartupButton";
+            this.deleteStartupButton.Size = new System.Drawing.Size(146, 42);
+            this.deleteStartupButton.TabIndex = 5;
+            this.deleteStartupButton.Text = "スタートアップ削除";
+            this.deleteStartupButton.UseVisualStyleBackColor = true;
+            this.deleteStartupButton.Click += new System.EventHandler(this.deleteStartupButton_Click);
+            // 
+            // createStartupButton
+            // 
+            this.createStartupButton.AutoSize = true;
+            this.createStartupButton.Location = new System.Drawing.Point(3, 378);
+            this.createStartupButton.Name = "createStartupButton";
+            this.createStartupButton.Size = new System.Drawing.Size(146, 42);
+            this.createStartupButton.TabIndex = 4;
+            this.createStartupButton.Text = "スタートアップ作成";
+            this.createStartupButton.UseVisualStyleBackColor = true;
+            this.createStartupButton.Click += new System.EventHandler(this.createStartupButton_Click);
             // 
             // authGroupBox
             // 
@@ -452,16 +483,12 @@
             // 
             this.scrobbleTimer.Tick += new System.EventHandler(this.scrobbleTimer_Tick);
             // 
-            // bindingSource
-            // 
-            this.bindingSource.DataSource = typeof(ScrobblerForKbMediaPlayer.Settings);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(420, 448);
+            this.ClientSize = new System.Drawing.Size(420, 507);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mainPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -476,6 +503,7 @@
             this.contextMenuStrip.ResumeLayout(false);
             this.useScrobbleGroupBox.ResumeLayout(false);
             this.useScrobbleGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scrobbleTimeRateTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scrobbleTimeSecondsNumericUpDown)).EndInit();
             this.mainPanel.ResumeLayout(false);
@@ -484,7 +512,6 @@
             this.authGroupBox.ResumeLayout(false);
             this.authGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.useIconPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -530,6 +557,8 @@
         private System.Windows.Forms.Button logoutButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.Button createStartupButton;
+        private System.Windows.Forms.Button deleteStartupButton;
     }
 }
 

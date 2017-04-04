@@ -7,6 +7,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Threading;
@@ -27,6 +28,11 @@ namespace ScrobblerForKbMediaPlayer
         private PropertyData CurrentPropertyData { get; set; }
         /// <summary>Last.fm 管理.</summary>
         private LastFmManager lastFmManager;
+        /// <summary>スタートアップのショートカットパス。</summary>
+        string shortcutPath = Path.Combine(
+            System.Environment.GetFolderPath(Environment.SpecialFolder.Startup),
+            Path.GetFileNameWithoutExtension(Application.ExecutablePath) + ".lnk");
+
 
 
         /// <summary>
@@ -356,6 +362,51 @@ namespace ScrobblerForKbMediaPlayer
             scrobbleTimeSecondsNumericUpDown.Enabled = useScrobbleTimeSecondsCheckBox.Checked;
         }
 
+
+
+        private void createStartupButton_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(shortcutPath))
+            {
+                if (MessageBox.Show(Properties.Resources.MessageStartupOverwrite, AppUtil.GetAppName(), MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return;
+            }
+
+            IWshRuntimeLibrary.WshShell shell = null;
+            IWshRuntimeLibrary.IWshShortcut shortcut = null;
+            try
+            {
+                shell = new IWshRuntimeLibrary.WshShell();
+                shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(shortcutPath);
+                shortcut.TargetPath = Application.ExecutablePath;
+                shortcut.WorkingDirectory = Application.StartupPath;
+                shortcut.Save();
+                MessageBox.Show(Properties.Resources.MessageStartupCreated, AppUtil.GetAppName());
+
+            }
+            finally
+            {
+                if (shortcut != null)
+                    System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shortcut);
+                if (shell != null)
+                    System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shell);
+            }
+        }
+
+        private void deleteStartupButton_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(shortcutPath))
+            {
+                if (MessageBox.Show(Properties.Resources.MessageStartupDelete, AppUtil.GetAppName(), MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return;
+                File.Delete(shortcutPath);
+            }
+            else
+            {
+                MessageBox.Show(Properties.Resources.MessageStartupNotExists, AppUtil.GetAppName());
+            }
+        }
+
         #endregion
 
 
@@ -530,6 +581,8 @@ namespace ScrobblerForKbMediaPlayer
 
 
         #endregion
+
+
 
     }
 }

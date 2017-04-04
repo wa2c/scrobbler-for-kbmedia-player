@@ -153,6 +153,19 @@
   <data name="MessageMutex" xml:space="preserve">
     <value>多重起動はできません。</value>
   </data>
+  <data name="MessageStartupCreated" xml:space="preserve">
+    <value>スタートアップにショートカットを作成しました。</value>
+  </data>
+  <data name="MessageStartupDelete" xml:space="preserve">
+    <value>スタートアップからショートカットを削除しますか？</value>
+  </data>
+  <data name="MessageStartupNotExists" xml:space="preserve">
+    <value>スタートアップにショートカットが存在しません。</value>
+  </data>
+  <data name="MessageStartupOverwrite" xml:space="preserve">
+    <value>スタートアップにショートカットが存在します。
+上書きしますか？</value>
+  </data>
   <data name="TitleNotificationLove" xml:space="preserve">
     <value>Loved Tracks に追加しました</value>
   </data>

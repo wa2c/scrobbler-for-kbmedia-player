@@ -169,6 +169,43 @@ namespace ScrobblerForKbMediaPlayer.Properties {
         }
         
         /// <summary>
+        ///   スタートアップにショートカットを作成しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageStartupCreated {
+            get {
+                return ResourceManager.GetString("MessageStartupCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   スタートアップからショートカットを削除しますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageStartupDelete {
+            get {
+                return ResourceManager.GetString("MessageStartupDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   スタートアップにショートカットが存在しません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageStartupNotExists {
+            get {
+                return ResourceManager.GetString("MessageStartupNotExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   スタートアップにショートカットが存在します。
+        ///上書きしますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageStartupOverwrite {
+            get {
+                return ResourceManager.GetString("MessageStartupOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Loved Tracks に追加しました に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleNotificationLove {

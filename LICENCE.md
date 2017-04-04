@@ -1,7 +1,8 @@
 ﻿Licence
 =======
 
-The source code hosted at https://github.com/wa2c/scrobbler-for-kbmedia-player is licensed under the MIT License (MIT).
+The source code hosted at https://github.com/wa2c/scrobbler-for-kbmedia-player
+is licensed under the MIT License (MIT).
 
 ## MIT License (MIT)
 
