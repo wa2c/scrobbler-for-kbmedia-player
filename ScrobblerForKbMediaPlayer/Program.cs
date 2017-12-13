@@ -45,13 +45,13 @@ namespace ScrobblerForKbMediaPlayer
                 
 
                 Program.Settings = new Settings();
-                Program.Settings.ReadXml();
+                try { Program.Settings.ReadXml(); } catch { }
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm());
 
-                Program.Settings.WriteXml();
+                try { Program.Settings.WriteXml(); } catch { }
             }
         }
 

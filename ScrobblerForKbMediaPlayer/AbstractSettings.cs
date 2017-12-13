@@ -198,7 +198,7 @@ namespace ScrobblerForKbMediaPlayer
 
             // XMLファイルの書き込み
             XmlSerializer serializer = new XmlSerializer(this.GetType());
-            using (FileStream outputStream = new FileStream(path, FileMode.Create))
+            using (FileStream outputStream = new FileStream(path, FileMode.OpenOrCreate))
             {
                 serializer.Serialize(outputStream, this);
             }

@@ -136,7 +136,9 @@ namespace ScrobblerForKbMediaPlayer
                 this.authStateLabel.Text = Properties.Resources.MessageAuthenticated;
                 this.usernameTextBox.Text = this.lastFmManager.UserName;
                 this.useIconPictureBox.Image = this.lastFmManager.UserImage;
-                Program.Settings.LastFmSessionId = AppUtil.EncryptString(this.lastFmManager.SessionKey, k);
+                string sessionId = AppUtil.EncryptString(this.lastFmManager.SessionKey, k);
+                if (!string.IsNullOrEmpty(sessionId))
+                    Program.Settings.LastFmSessionId = sessionId;
             }
             else
             {
