@@ -200,6 +200,7 @@ namespace ScrobblerForKbMediaPlayer
             XmlSerializer serializer = new XmlSerializer(this.GetType());
             using (FileStream outputStream = new FileStream(path, FileMode.OpenOrCreate))
             {
+                outputStream.SetLength(0);
                 serializer.Serialize(outputStream, this);
             }
         }

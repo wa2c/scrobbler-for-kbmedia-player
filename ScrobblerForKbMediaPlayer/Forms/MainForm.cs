@@ -318,9 +318,10 @@ namespace ScrobblerForKbMediaPlayer
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                HideWindow();
                 e.Cancel = true;
             }
+
+            HideWindow();
         }
 
 
