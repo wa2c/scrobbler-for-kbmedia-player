@@ -112,8 +112,9 @@ namespace ScrobblerForKbMediaPlayer
                 this.connection.Initialize();
                 isSucceeded = true;
             }
-            catch
+            catch (Exception e)
             {
+                Console.Out.WriteLine(e.Message);
             }
             finally
             {

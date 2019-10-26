@@ -1,5 +1,6 @@
 ﻿using ScrobblerForKbMediaPlayer.Utils;
 using System;
+using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -46,6 +47,9 @@ namespace ScrobblerForKbMediaPlayer
 
                 Program.Settings = new Settings();
                 try { Program.Settings.ReadXml(); } catch (Exception e) { Console.Out.WriteLine(e.StackTrace); }
+
+
+                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
