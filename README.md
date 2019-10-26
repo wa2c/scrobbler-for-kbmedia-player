@@ -21,7 +21,7 @@ Last.fm では、再生情報を自分のアカウントに通知することを
 ## 開発環境
 
 * Windows 10 Pro 64bit
-* Visual Studio Community 2015
+* Visual Studio Community 2019
 * .NET Framework 4.5
 
 
@@ -111,11 +111,13 @@ Last.fm では、再生情報を自分のアカウントに通知することを
 ## 作者
 
 本ソフトウェアは、wa2cによって開発、公開されています。
-* https://bitbucket.org/wa2c/
 * https://github.com/wa2c
 
 
 ## 履歴
+
+2019-10-26: Ver.1.5
+* TLS 1.2 を有効にしました。
 
 2018-02-15: Ver.1.4
 * 設定ファイルが正しく保存されない問題を修正しました。
